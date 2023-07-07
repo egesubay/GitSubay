@@ -13,8 +13,17 @@ else{
 $usersql= "INSERT INTO user(isim, soyisim, dogumTarihi) VALUES ('$name','$surname','$birth')";
 mysqli_query($conn, $usersql);
 
-$loginsql="INSERT INTO login(username, password) VALUES ('$username','$password')";
+$selectsql = "SELECT LAST_INSERT_ID() ";
+$selectid = mysqli_query($conn,$selectsql);
+$fetchar=mysqli_fetch_assoc($selectid);
+$user_id = implode($fetchar);
+
+
+
+
+$loginsql="INSERT INTO login (username,password,user_id) VALUES ('$username','$password','$user_id')";
 mysqli_query($conn, $loginsql);
+header("location:../Pages/Login.php");
 
 }
 
